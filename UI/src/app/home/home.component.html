@@ -1,0 +1,54 @@
+<div class="form-group"> 
+        <div *ngIf="expanded == true" class="loading-indicator">
+                <mat-spinner style="margin:0 auto;" mode="indeterminate"></mat-spinner>
+        </div>
+       
+ 
+        <div class="form-group col-md-12">
+            <div class="row"> 
+                <div class="col-md-10">                                            
+                        <mat-form-field>                                                                                                           
+                                <input (keyup.enter)="onEnter()" [(ngModel)] = "destination" matInput type="text" placeholder="Search destination"/>
+                                <button mat-button *ngIf="value" matSuffix mat-icon-button aria-label="Clear" (click)="value=''">
+                                  <mat-icon>close</mat-icon>
+                                </button>
+                        </mat-form-field>
+                </div>
+                <div class="col-md-2"><button type="submit" mat-raised-button color="primary" (click)="findFlights()">Find!</button></div>
+            </div>
+            <div class="row">
+           <table mat-table class="mat-elevation-z8" [dataSource]="dataFromAPI.FareInfo">
+  
+            <ng-container matColumnDef="CurrencyCode">
+                <mat-header-cell *matHeaderCellDef>Currency</mat-header-cell>
+                <mat-cell *matCellDef="let fareInfo">{{fareInfo.CurrencyCode}}</mat-cell>
+            </ng-container>
+          
+            <ng-container matColumnDef="OriginLocation">
+                <mat-header-cell *matHeaderCellDef>Origin</mat-header-cell>
+                <mat-cell *matCellDef="let fareInfo">{{fareInfo.OriginLocation}}</mat-cell>
+            </ng-container>
+          
+            <ng-container matColumnDef="DepartureDateTime">
+                <mat-header-cell *matHeaderCellDef>Departure</mat-header-cell>
+                <mat-cell *matCellDef="let fareInfo">{{fareInfo.DepartureDateTime}}</mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="ReturnDateTime">
+                <mat-header-cell *matHeaderCellDef>Return</mat-header-cell>
+                <mat-cell *matCellDef="let fareInfo">{{fareInfo.ReturnDateTime}}</mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="LowestFare.Fare">
+                    <mat-header-cell *matHeaderCellDef>Fare</mat-header-cell>
+                    <mat-cell *matCellDef="let fareInfo">{{fareInfo.LowestFare.Fare | currency:'USD'}}</mat-cell>
+            </ng-container>
+                    
+            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+            
+            <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+            
+                </table>
+            </div>
+            </div>
+            </div>
